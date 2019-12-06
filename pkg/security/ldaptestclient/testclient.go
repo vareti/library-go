@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"time"
 
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 // Fake is a mock client for an LDAP server
@@ -61,6 +61,14 @@ func (c *Fake) SimpleBind(simpleBindRequest *ldap.SimpleBindRequest) (*ldap.Simp
 	return c.SimpleBindResponse, nil
 }
 
+func (c *Fake) ExternalBind() error {
+	return nil
+}
+
+func (c *Fake) UnauthenticatedBind(username string) error {
+	return nil
+}
+
 // Add forwards an addition request to the LDAP server
 func (c *Fake) Add(addRequest *ldap.AddRequest) error {
 	return nil
@@ -73,6 +81,10 @@ func (c *Fake) Del(delRequest *ldap.DelRequest) error {
 
 // Modify forwards a modification request to the LDAP server
 func (c *Fake) Modify(modifyRequest *ldap.ModifyRequest) error {
+	return nil
+}
+
+func (c *Fake) ModifyDN(modifyRequest *ldap.ModifyDNRequest) error {
 	return nil
 }
 

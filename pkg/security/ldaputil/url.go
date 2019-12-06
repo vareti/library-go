@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 // Scheme is a valid ldap scheme

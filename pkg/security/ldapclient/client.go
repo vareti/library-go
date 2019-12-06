@@ -8,7 +8,7 @@ import (
 	"github.com/openshift/library-go/pkg/security/ldaputil"
 	"k8s.io/client-go/util/cert"
 
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 // NewLDAPClientConfig returns a new LDAP client config

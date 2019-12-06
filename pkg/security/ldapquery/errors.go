@@ -3,7 +3,7 @@ package ldapquery
 import (
 	"fmt"
 
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 func NewNoSuchObjectError(baseDN string) error {

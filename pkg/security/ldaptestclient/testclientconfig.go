@@ -2,7 +2,7 @@ package ldaptestclient
 
 import (
 	"github.com/openshift/library-go/pkg/security/ldapclient"
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 // fakeConfig regurgitates internal state in order to conform to Config

@@ -8,7 +8,7 @@ import (
 
 	"github.com/openshift/library-go/pkg/security/ldaptestclient"
 	"github.com/openshift/library-go/pkg/security/ldaputil"
-	"gopkg.in/ldap.v2"
+	"gopkg.in/ldap.v3"
 )
 
 const (
