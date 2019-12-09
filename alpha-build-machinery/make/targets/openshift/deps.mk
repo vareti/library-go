@@ -8,22 +8,22 @@ update-deps:
 	$(scripts_dir)/$@.sh
 .PHONY: update-deps
 
-# $1 - temporary directory to restore vendor dependencies from glide.lock
+# $1 - temporary directory to restore vendor dependencies from go.sum
 define restore-deps
 	ln -s $(abspath ./) "$(1)"/current
 	cp -R -H ./ "$(1)"/updated
 	$(RM) -r "$(1)"/updated/vendor
-	cd "$(1)"/updated && glide install --strip-vendor && find ./vendor -name '.hg_archival.txt' -delete
-	cd "$(1)" && $(deps_diff) -r {current,updated}/vendor/ > updated/glide.diff || true
+	cd "$(1)"/updated && go mod vendor
+	cd "$(1)" && $(deps_diff) -r {current,updated}/vendor/ > updated/gomodules.diff || true
 endef
 
 verify-deps: tmp_dir:=$(shell mktemp -d)
 verify-deps:
 	$(call restore-deps,$(tmp_dir))
-	@echo $(deps_diff) '$(tmp_dir)'/{current,updated}/glide.diff
-	@     $(deps_diff) '$(tmp_dir)'/{current,updated}/glide.diff || ( \
-		echo "ERROR: Content of 'vendor/' directory doesn't match 'glide.lock' and the overrides in 'glide.diff'!" && \
-		echo "If this is an intentional change (a carry patch) please update the 'glide.diff' using 'make update-deps-overrides'." && \
+	@echo $(deps_diff) '$(tmp_dir)'/{current,updated}/gomodules.diff
+	@     $(deps_diff) '$(tmp_dir)'/{current,updated}/gomodules.diff || ( \
+		echo "ERROR: Content of 'vendor/' directory doesn't match 'go.sum' and the overrides in 'gomodules.diff'!" && \
+		echo "If this is an intentional change (a carry patch) please update the 'gomodules.diff' using 'make update-deps-overrides'." && \
 		exit 1 \
 	)
 .PHONY: verify-deps
@@ -31,5 +31,5 @@ verify-deps:
 update-deps-overrides: tmp_dir:=$(shell mktemp -d)
 update-deps-overrides:
 	$(call restore-deps,$(tmp_dir))
-	cp "$(tmp_dir)"/{updated,current}/glide.diff
+	cp "$(tmp_dir)"/{updated,current}/gomodules.diff
 .PHONY: update-deps-overrides
